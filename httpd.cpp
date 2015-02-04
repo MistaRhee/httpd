@@ -31,7 +31,7 @@ void cHttpd::download(const std::string url, const std::string fileName){
     fclose(fin);
 }
 
-std::string qDownload(const std::string urli, int nameLen){
+std::string cHttpd::qDownload(const std::string url, int nameLen){
     std::string fileName = generateRandomName(nameLen);
     FILE* fin;
     fin = fopen(fileName.c_str(), "w+");
@@ -46,9 +46,10 @@ std::string qDownload(const std::string urli, int nameLen){
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
     }
     fclose(fin);
+    return fileName;
 }
 
-std::string generateRandomName(int length){
+std::string cHttpd::generateRandomName(int length){
     srand(time(NULL));
     const char aCharacters[] = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     std::string rVal;
