@@ -15,10 +15,24 @@ cHttpd::~cHttpd(){
     curl_easy_cleanup(curl);
 }
 
+std::string cHttpd::fixURL(const std::string incoming){
+    std::string rVal;
+    for(int i = 0; i < incoming.size(); i++){
+        if(incoming[i] == ' '){
+            rVal += "%20";
+        }
+        else{
+            rVal += incoming[i];
+        }
+    }
+    return rVal;
+}
+
 void cHttpd::download(const std::string url, const std::string fileName){
     FILE* fin;
+    std::string newURL = fixURL(url);
     fin = fopen(fileName.c_str(), "w+");
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, newURL.c_str());
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
     //curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, "deflate");
