@@ -23,3 +23,8 @@ A simple header to download a HTML page using libcurl and c++
  OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  OTHER DEALINGS IN THE SOFTWARE.
+
+## Compiling this software
+This project requires the following to compile:
+    - -lcurl --std=c++11
+
