@@ -33,6 +33,7 @@
 #include <cstdlib>
 #include <string>
 #include <cstring>
+#include <exception>
 
 class cHttpd{
     public:
@@ -41,6 +42,7 @@ class cHttpd{
         std::string qDownload(const std::string, int); //Takes in two arguments, the URL and the length of the randomly generated file name
         std::string fixURL(const std::string); //Takes in a URL and ensures that any spaces are turned into %20s (something which I found out with my own project that broke this class)
         void download(const std::string, const std::string); //Takes in two arguments, the URL and the title of the file which the HTML page is saved to
+        bool checkExist(const std::string);
     private:
         std::string generateRandomName(int); //Randomly generates the filename. Acceptable characters can be changedwithin httpd.cpp
         void* curl;
