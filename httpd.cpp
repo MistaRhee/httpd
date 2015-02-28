@@ -1,16 +1,14 @@
 #include "httpd.hpp"
 
 struct mException : public std::exception {
-    mException(std::string);
+    mException(std::string in){
+        this->message = in;
+    }
     std::string message;
     const char * what() const throw(){
         return message.c_str();
     }
 };
-
-mException::mException(std::string in){
-    this->message = in;
-}
 
 size_t write_data(void* ptr, size_t size, size_t nmemb, FILE* stream){
     size_t written;
@@ -40,6 +38,7 @@ std::string cHttpd::fixURL(const std::string incoming){
     return rVal;
 }
 
+/*
 bool cHttpd::checkExist(const std::string url){
     bool rVal = 1;
     CURL* valid;
@@ -50,14 +49,18 @@ bool cHttpd::checkExist(const std::string url){
         if((res = curl_easy_perform(valid)) != CURLE_OK) rVal = 0;
     }
     else rVal = 0;
+    curl_easy_cleanup(valid);
     return rVal;
 }
+*/
 
 void cHttpd::download(const std::string url, const std::string fileName){
     try{
+/*
         if(!checkExist(url)){
             throw(mException("URL isn't valid or cannot be opened by curl"));
         }
+*/
         FILE* fin;
         std::string newURL = fixURL(url);
         fin = fopen(fileName.c_str(), "w+");
@@ -82,9 +85,11 @@ void cHttpd::download(const std::string url, const std::string fileName){
 
 std::string cHttpd::qDownload(const std::string url, int nameLen){
     try{
+/*
         if(!checkExist(url)){
             throw(mException("URL isn't valid or cannot be opened by curl"));
         }
+*/
         std::string fileName = generateRandomName(nameLen);
         FILE* fin;
         fin = fopen(fileName.c_str(), "w+");
@@ -101,11 +106,12 @@ std::string cHttpd::qDownload(const std::string url, int nameLen){
             throw (mException(e));
         }
         fclose(fin);
+        return fileName;
     }
     catch(mException &e){
         printf("%s \n", e.what());
+        return NULL;
     }
-    return fileName;
 }
 
 std::string cHttpd::generateRandomName(int length){

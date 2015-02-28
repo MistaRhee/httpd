@@ -1,6 +1,19 @@
 /*
  *  httpd.hpp - A HTML page downloader using curl
  *
+ *  Instructions
+ *  ============
+ *
+ *  Not really that much to do, however, there is one function which may or may
+ *  not be useful. The check exist function will check if the URL exists before
+ *  executing the download, however, it will just "download" the URL anyway and
+ *  drop it into stdout (which is silly), so if the URL exists, it will double
+ *  runtime. To have this function, uncomment the stuff in httpd.cpp and the
+ *  function in this file
+ *
+ *  Copyright/Licensing stuffs
+ *  ==========================
+ *
  *  Copyright (C) 2015 Justin Huang
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
@@ -42,7 +55,7 @@ class cHttpd{
         std::string qDownload(const std::string, int); //Takes in two arguments, the URL and the length of the randomly generated file name
         std::string fixURL(const std::string); //Takes in a URL and ensures that any spaces are turned into %20s (something which I found out with my own project that broke this class)
         void download(const std::string, const std::string); //Takes in two arguments, the URL and the title of the file which the HTML page is saved to
-        bool checkExist(const std::string);
+        //bool checkExist(const std::string);
     private:
         std::string generateRandomName(int); //Randomly generates the filename. Acceptable characters can be changedwithin httpd.cpp
         void* curl;
