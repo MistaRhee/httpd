@@ -61,9 +61,12 @@ void cHttpd::download(const std::string url, const std::string fileName){
             throw(mException("URL isn't valid or cannot be opened by curl"));
         }
 */
-        FILE* fin;
+        FILE* fin = NULL;
         std::string newURL = fixURL(url);
         fin = fopen(fileName.c_str(), "w+");
+        if(fin == NULL){
+            throw(mException("File couldn't be opened!"));
+        }
         curl_easy_setopt(curl, CURLOPT_URL, newURL.c_str());
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
@@ -91,8 +94,11 @@ std::string cHttpd::qDownload(const std::string url, int nameLen){
         }
 */
         std::string fileName = generateRandomName(nameLen);
-        FILE* fin;
+        FILE* fin = NULL;
         fin = fopen(fileName.c_str(), "w+");
+        if(fin == NULL){
+            throw(mException("File couldn't be opened!"));
+        }
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
